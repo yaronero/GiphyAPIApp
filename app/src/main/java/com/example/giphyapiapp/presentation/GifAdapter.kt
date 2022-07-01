@@ -6,12 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.giphyapiapp.R
-import com.example.giphyapiapp.model.GifData
 
 class GifAdapter(
     private val context: Context,
-    private val gifList: List<GifData>
+    private var gifList: List<String>
 ) : RecyclerView.Adapter<GifViewHolder>() {
+
+    fun setList(list: List<String>){
+        gifList = list
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GifViewHolder {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.item_gif, parent, false)
@@ -20,7 +24,7 @@ class GifAdapter(
 
     override fun onBindViewHolder(holder: GifViewHolder, position: Int) {
         Glide.with(context)
-            .load(gifList[position].gifUrl)
+            .load(gifList[position])
             .into(holder.gifContainer)
     }
 

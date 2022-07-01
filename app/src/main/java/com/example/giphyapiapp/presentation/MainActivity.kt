@@ -19,10 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setupRecyclerView()
+        viewModel.gifDataList.observe(this) {
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun setupRecyclerView(){
-        adapter = GifAdapter(this, viewModel.gifDataList.value!!)
+        adapter = GifAdapter(this, listOf())
 
         val rvGifs = findViewById<RecyclerView>(R.id.rvGifs)
         rvGifs.adapter = adapter

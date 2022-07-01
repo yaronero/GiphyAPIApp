@@ -3,19 +3,21 @@ package com.example.giphyapiapp.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.giphyapiapp.model.GifData
+import androidx.lifecycle.viewModelScope
+import com.example.giphyapiapp.data.repository.Repository
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val _gifDataList = MutableLiveData<List<GifData>>()
-    val gifDataList: LiveData<List<GifData>>
+    private val repository = Repository()
+
+    private val _gifDataList = MutableLiveData<List<String>>()
+    val gifDataList: LiveData<List<String>>
         get() = _gifDataList
 
     init{
-        val list = mutableListOf<GifData>()
-        for(i in 1..10){
-            list.add(GifData("https://i.gifer.com/2GU.gif"))
+        viewModelScope.launch {
+            _gifDataList.value = repository.getGifURLList()
         }
-        _gifDataList.value = list
     }
 }
