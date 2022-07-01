@@ -15,9 +15,12 @@ class MainViewModel : ViewModel() {
     val gifDataList: LiveData<List<String>>
         get() = _gifDataList
 
-    init{
+    val gifInputName = MutableLiveData<String>()
+
+    fun getGifsByName(name: String){
+        gifInputName.value = name
         viewModelScope.launch {
-            _gifDataList.value = repository.getGifURLList()
+            _gifDataList.value = repository.getGifURLListByName(gifInputName.value.toString())
         }
     }
 }

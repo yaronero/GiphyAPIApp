@@ -9,7 +9,9 @@ class Repository {
 
     private var gifURLList = mutableListOf<String>()
 
-    suspend fun getGifURLList(): List<String> {
+    suspend fun getGifURLListByName(name: String): List<String> {
+        gifURLList.clear()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -17,7 +19,7 @@ class Repository {
 
         val apiHelper = retrofit.create(ApiHelper::class.java)
 
-        val response = apiHelper.getAllGifs()
+        val response = apiHelper.getAllGifsByName(name)
 
         if(response.isSuccessful){
             val responseBody = response.body()

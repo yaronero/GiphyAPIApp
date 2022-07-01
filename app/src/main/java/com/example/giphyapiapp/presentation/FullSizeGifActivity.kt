@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.example.giphyapiapp.R
 
@@ -30,12 +29,21 @@ class FullSizeGifActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+        val resultIntent = Intent()
+        resultIntent.putExtra(MainActivity.GIF_NAME, intent.getStringExtra(MainActivity.GIF_NAME))
+        setResult(RESULT_OK, resultIntent)
+        finish()
+        super.onBackPressed()
+    }
+
     companion object{
         private const val URL = "url"
 
-        fun newIntent(context: Context, url: String): Intent{
+        fun newIntent(context: Context, url: String, name: String): Intent{
             return Intent(context, FullSizeGifActivity::class.java).let {
                 it.putExtra(URL, url)
+                it.putExtra(MainActivity.GIF_NAME, name)
             }
         }
     }

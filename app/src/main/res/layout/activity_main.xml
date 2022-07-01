@@ -7,6 +7,36 @@
     android:layout_gravity="center"
     tools:context=".presentation.MainActivity">
 
+    <LinearLayout
+        android:id="@+id/searchLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etGifName"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:hint="@string/enter_gif_name"
+            android:layout_gravity="fill_horizontal"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:background="@color/teal_200"
+            android:src="@drawable/ic_search"
+            android:contentDescription="@string/search" />
+
+    </LinearLayout>
+
     <ProgressBar
         android:id="@+id/loadingBar"
         android:layout_width="100dp"
@@ -14,16 +44,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/gray_text"
+        app:layout_constraintTop_toBottomOf="@id/searchLL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        tools:text="@string/no_data"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGifs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constrainedHeight="true"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/searchLL"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_gif"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
