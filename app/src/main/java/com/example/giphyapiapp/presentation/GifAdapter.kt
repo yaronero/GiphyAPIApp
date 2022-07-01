@@ -12,6 +12,8 @@ class GifAdapter(
     private var gifList: List<String>
 ) : RecyclerView.Adapter<GifViewHolder>() {
 
+    var onGifClickListener: ((String)->Unit)? = null
+
     fun setList(list: List<String>){
         gifList = list
     }
@@ -26,6 +28,10 @@ class GifAdapter(
         Glide.with(context)
             .load(gifList[position])
             .into(holder.gifContainer)
+
+        holder.gifContainer.setOnClickListener {
+            onGifClickListener?.invoke(gifList[position])
+        }
     }
 
     override fun getItemCount(): Int = gifList.size

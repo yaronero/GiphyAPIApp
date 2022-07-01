@@ -2,6 +2,8 @@ package com.example.giphyapiapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val loadingBar = findViewById<ProgressBar>(R.id.loadingBar)
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setupRecyclerView()
         viewModel.gifDataList.observe(this) {
             adapter.setList(it)
+            loadingBar.visibility = View.GONE
             adapter.notifyDataSetChanged()
         }
     }
@@ -33,5 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         val gridLayout = GridLayoutManager(this, 2)
         rvGifs.layoutManager = gridLayout
+
+        adapter.onGifClickListener = {
+            val intent = FullSizeGifActivity.newIntent(this, it)
+            startActivity(intent)
+        }
     }
 }
